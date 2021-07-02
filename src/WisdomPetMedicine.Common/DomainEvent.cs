@@ -9,6 +9,11 @@ namespace WisdomPetMedicine.Common
 
         public void Register(Action<T> callback)
         {
+            if (Actions.Exists(a => a.Method == callback.Method))
+            {
+                return;
+            }
+
             Actions.Add(callback);
         }
 
