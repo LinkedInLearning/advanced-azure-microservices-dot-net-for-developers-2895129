@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WisdomPetMedicine.Common
 {
@@ -9,6 +10,11 @@ namespace WisdomPetMedicine.Common
 
         public void Register(Action<T> callback)
         {
+            if (Actions.Exists(a => a.Method == callback.Method))
+            {
+                return;
+            }
+
             Actions.Add(callback);
         }
 
