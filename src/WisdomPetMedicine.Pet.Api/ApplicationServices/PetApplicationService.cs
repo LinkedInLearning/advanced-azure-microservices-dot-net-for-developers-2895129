@@ -1,4 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System;
+using System.Net.Mime;
+using System.Text;
+using System.Threading.Tasks;
+using WisdomPetMedicine.Common;
 using WisdomPetMedicine.Pet.Api.Commands;
 using WisdomPetMedicine.Pet.Api.IntegrationEvents;
 using WisdomPetMedicine.Pet.Domain.Events;
@@ -14,12 +21,13 @@ namespace WisdomPetMedicine.Pet.Api.ApplicationServices
         private readonly IBreedService breedService;
 
         public PetApplicationService(IPetRepository petRepository,
-                                     IBreedService breedService)
+                                     IBreedService breedService,
+                                     IConfiguration configuration)
         {
             this.petRepository = petRepository;
             this.breedService = breedService;
 
-            DomainEvents.PetFlaggedForAdoption.Register(c =>
+            DomainEvents.PetFlaggedForAdoption.Register(async c =>
             {
                 var integrationEvent = new PetFlaggedForAdoptionIntegrationEvent()
                 {
@@ -31,6 +39,11 @@ namespace WisdomPetMedicine.Pet.Api.ApplicationServices
                     DateOfBirth = c.DateOfBirth,
                     Species = c.Species
                 };
+
+                await PublishIntegrationEventAsync(integrationEvent,
+                                                   configuration["ServiceBus:ConnectionString"],
+                                                   configuration["ServiceBus:Adoption:TopicName"]);
+
             });
         }
 
@@ -77,6 +90,23 @@ namespace WisdomPetMedicine.Pet.Api.ApplicationServices
         {
             var pet = await petRepository.GetAsync(PetId.Create(command.Id));
             pet.TransferToHospital();
+        }
+
+        private async Task PublishIntegrationEventAsync(IIntegrationEvent integrationEvent, string connectionString, string topicName)
+        {
+            var jsonMessage = JsonConvert.SerializeObject(integrationEvent);
+            var body = Encoding.UTF8.GetBytes(jsonMessage);
+            var client = new ServiceBusClient(connectionString);
+            var sender = client.CreateSender(topicName);
+            var message = new ServiceBusMessage()
+            {
+                Body = new BinaryData(body),
+                MessageId = Guid.NewGuid().ToString(),
+                ContentType = MediaTypeNames.Application.Json,
+                Subject = integrationEvent.GetType().FullName
+            };
+
+            await sender.SendMessageAsync(message);
         }
     }
 }
