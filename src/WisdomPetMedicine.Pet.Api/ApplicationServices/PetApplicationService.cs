@@ -45,6 +45,23 @@ namespace WisdomPetMedicine.Pet.Api.ApplicationServices
                                                    configuration["ServiceBus:Adoption:TopicName"]);
 
             });
+
+            DomainEvents.PetTransferredToHospital.Register(async c =>
+            {
+                var integrationEvent = new PetTransferredToHospitalIntegrationEvent()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Breed = c.Breed,
+                    Sex = c.Sex,
+                    Color = c.Color,
+                    DateOfBirth = c.DateOfBirth,
+                    Species = c.Species
+                };
+                await PublishIntegrationEventAsync(integrationEvent,
+                                                   configuration["ServiceBus:ConnectionString"],
+                                                   configuration["ServiceBus:Transfer:TopicName"]);
+            });
         }
 
         public async Task HandleCommandAsync(CreatePetCommand command)
