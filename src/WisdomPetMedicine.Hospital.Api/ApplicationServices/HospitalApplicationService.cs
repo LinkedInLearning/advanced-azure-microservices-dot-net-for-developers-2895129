@@ -10,9 +10,8 @@ namespace WisdomPetMedicine.Hospital.Api.ApplicationServices
     {
         private readonly IPatientAggregateStore patientAggregateStore;
 
-        public HospitalApplicationService(IPatientAggregateStore patientAggregateStore)
+        public HospitalApplicationService()
         {
-            this.patientAggregateStore = patientAggregateStore;
         }
 
         public async Task HandleAsync(SetWeightCommand command)
