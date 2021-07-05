@@ -23,6 +23,7 @@ namespace WisdomPetMedicine.Rescue.Api.Infrastructure
             modelBuilder.Entity<Adopter>().OwnsOne(x => x.Name);
             modelBuilder.Entity<Adopter>().OwnsOne(x => x.Questionnaire);
             modelBuilder.Entity<Adopter>().OwnsOne(x => x.Address);
+            modelBuilder.Entity<Adopter>().OwnsOne(x => x.PhoneNumber);
             modelBuilder.Entity<RescuedAnimal>().HasKey(x => x.Id);
             modelBuilder.Entity<RescuedAnimal>().OwnsOne(x => x.AdopterId);
         }

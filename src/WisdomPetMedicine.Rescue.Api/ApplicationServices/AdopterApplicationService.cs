@@ -58,5 +58,12 @@ namespace WisdomPetMedicine.Rescue.Api.ApplicationServices
             adopter.RequestToAdopt(RescuedAnimalId.Create(command.PetId));
             await rescueRepository.UpdateAdopterAsync(adopter);
         }
+
+        public async Task HandleCommandAsync(SetAdopterPhoneNumberCommand command)
+        {
+            var adopter = await rescueRepository.GetAdopterAsync(AdopterId.Create(command.Id));
+            adopter.SetPhoneNumber(AdopterPhoneNumber.Create(command.PhoneNumber));
+            await rescueRepository.UpdateAdopterAsync(adopter);
+        }
     }
 }
