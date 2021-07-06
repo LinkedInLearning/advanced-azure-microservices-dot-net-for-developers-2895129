@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 using WisdomPetMedicine.Rescue.Api.Commands;
 using WisdomPetMedicine.Rescue.Domain.Entities;
 using WisdomPetMedicine.Rescue.Domain.Events;
@@ -11,17 +12,20 @@ namespace WisdomPetMedicine.Rescue.Api.ApplicationServices
     {
         private readonly IRescueRepository rescueRepository;
 
-        public AdopterApplicationService(IRescueRepository rescuedAnimalRepository)
+        public AdopterApplicationService(IRescueRepository rescuedAnimalRepository,
+                                         IServiceScopeFactory serviceScopeFactory)
         {
             this.rescueRepository = rescuedAnimalRepository;
 
-            DomainEvents.AdoptionRequestCreated.Register((e) =>
+            DomainEvents.AdoptionRequestCreated.Register(async e =>
             {
-                var rescuedAnimal = new RescuedAnimal(RescuedAnimalId.Create(e.RescuedAnimalId));
+                using var scope = serviceScopeFactory.CreateScope();
+                var repo = scope.ServiceProvider.GetRequiredService<IRescueRepository>();
+                var rescuedAnimal = await repo.GetRescuedAnimalAsync(RescuedAnimalId.Create(e.RescuedAnimalId));
                 rescuedAnimal.RequestToAdopt(AdopterId.Create(e.AdopterId));
+                await repo.UpdateRescuedAnimalAsync(rescuedAnimal);
             });
         }
-
         public async Task HandleCommandAsync(CreateAdopterCommand command)
         {
             var adopter = new Adopter(AdopterId.Create(command.Id));
