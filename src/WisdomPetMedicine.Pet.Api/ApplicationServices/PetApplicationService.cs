@@ -97,6 +97,13 @@ namespace WisdomPetMedicine.Pet.Api.ApplicationServices
             await petRepository.UpdateAsync(pet);
         }
 
+        public async Task HandleCommandAsync(SetDateOfBirthCommand command)
+        {
+            var pet = await petRepository.GetAsync(PetId.Create(command.Id));
+            pet.SetDateOfBirth(PetDateOfBirth.Create(command.DateOfBirth));
+            await petRepository.UpdateAsync(pet);
+        }
+
         public async Task HandleCommandAsync(FlagForAdoptionCommand command)
         {
             var pet = await petRepository.GetAsync(PetId.Create(command.Id));
