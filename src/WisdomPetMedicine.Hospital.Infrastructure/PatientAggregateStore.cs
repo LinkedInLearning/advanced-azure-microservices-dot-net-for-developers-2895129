@@ -1,6 +1,8 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WisdomPetMedicine.Hospital.Domain.Entities;
 using WisdomPetMedicine.Hospital.Domain.Repositories;
@@ -34,9 +36,34 @@ namespace WisdomPetMedicine.Hospital.Infrastructure
             throw new NotImplementedException();
         }
 
-        public Task SaveAsync(Patient patient)
+        public async Task SaveAsync(Patient patient)
         {
-            throw new NotImplementedException();
+            if (patient == null)
+            {
+                throw new ArgumentNullException(nameof(patient));
+            }
+
+            var changes = patient.GetChanges()
+              .Select(e => new CosmosEventData()
+              {
+                  Id = Guid.NewGuid(),
+                  AggregateId = $"Patient-{patient.Id}",
+                  EventName = e.GetType().Name,
+                  Data = JsonConvert.SerializeObject(e),
+                  AssemblyQualifiedName = JsonConvert.SerializeObject(e.GetType().AssemblyQualifiedName)
+              }).AsEnumerable();
+
+            if (!changes.Any())
+            {
+                return;
+            }
+
+            foreach (var item in changes)
+            {
+                await patientContainer.CreateItemAsync(item);
+            }
+
+            patient.ClearChanges();
         }
     }
 }

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WisdomPetMedicine.Hospital.Domain\WisdomPetMedicine.Hospital.Domain.csproj" />
+    <ProjectReference Include="..\WisdomPetMedicine.Hospital.Infrastructure\WisdomPetMedicine.Hospital.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

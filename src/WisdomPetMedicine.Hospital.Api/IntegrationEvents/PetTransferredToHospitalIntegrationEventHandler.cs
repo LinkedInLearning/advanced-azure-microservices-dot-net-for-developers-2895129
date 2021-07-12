@@ -7,20 +7,26 @@ using Newtonsoft.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using WisdomPetMedicine.Hospital.Api.Infrastructure;
+using WisdomPetMedicine.Hospital.Domain.Entities;
+using WisdomPetMedicine.Hospital.Domain.Repositories;
+using WisdomPetMedicine.Hospital.Domain.ValueObjects;
 
 namespace WisdomPetMedicine.Hospital.Api.IntegrationEvents
 {
     public class PetTransferredToHospitalIntegrationEventHandler : BackgroundService
     {
         private readonly IServiceScopeFactory serviceScopeFactory;
+        private readonly IPatientAggregateStore patientAggregateStore;
         private readonly ILogger<PetTransferredToHospitalIntegrationEventHandler> logger;
         private readonly ServiceBusClient client;
         private readonly ServiceBusProcessor processor;
         public PetTransferredToHospitalIntegrationEventHandler(IConfiguration configuration,
                                                                IServiceScopeFactory serviceScopeFactory,
+                                                               IPatientAggregateStore patientAggregateStore,
                                                                ILogger<PetTransferredToHospitalIntegrationEventHandler> logger)
         {
             this.serviceScopeFactory = serviceScopeFactory;
+            this.patientAggregateStore = patientAggregateStore;
             this.logger = logger;
 
             client = new ServiceBusClient(configuration["ServiceBus:ConnectionString"]);
@@ -53,6 +59,10 @@ namespace WisdomPetMedicine.Hospital.Api.IntegrationEvents
                 dbContext.PatientsMetadata.Add(theEvent);
                 await dbContext.SaveChangesAsync();
             }
+
+            var patientId = PatientId.Create(theEvent.Id);
+            var patient = new Patient(patientId);
+            await patientAggregateStore.SaveAsync(patient);
         }
 
         private Task Processor_ProcessErrorAsync(ProcessErrorEventArgs args)
