@@ -7,7 +7,7 @@ namespace WisdomPetMedicine.Common
     {
         private readonly List<IDomainEvent> changes;
 
-        public int Version { get; private set; } = -1;
+        public int Version { get; private set; }
 
         protected AggregateRoot()
         {
@@ -27,6 +27,7 @@ namespace WisdomPetMedicine.Common
             ChangeStateByUsingDomainEvent(domainEvent);
             ValidateState();
             changes.Add(domainEvent);
+            Version++;
         }
 
         public void Load(IEnumerable<IDomainEvent> history)
@@ -34,7 +35,6 @@ namespace WisdomPetMedicine.Common
             foreach (var e in history)
             {
                 ApplyDomainEvent(e);
-                Version++;
             }
             ClearChanges();
         }
