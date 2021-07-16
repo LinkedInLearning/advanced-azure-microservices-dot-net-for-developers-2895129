@@ -1,12 +1,7 @@
 {
   "profiles": {
     "WisdomPetMedicine.Hospital.Projector": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "CosmosDb:ContainerId": "Patients",
-        "CosmosDb:ConnectionString": "AccountEndpoint=https://wisdompetmedicine.documents.azure.com:443/;AccountKey=nFEqPuR6F28VbF5vy7obhWklyea9Q6LrxKlNrQVfK2nFEv8CTrJOtVOKzthUbPWk1TtWij1TCg1w0SRO724yZA==;",
-        "CosmosDb:DatabaseId": "WisdomPetMedicine"
-      }
+      "commandName": "Project"
     }
   }
 }
