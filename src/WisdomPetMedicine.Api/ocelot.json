@@ -61,7 +61,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44385
+          "Port": 44392
         }
       ],
       "UpstreamPathTemplate": "/queries/adoptions/all",
