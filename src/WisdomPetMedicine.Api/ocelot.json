@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/pet/{id}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+      "UpstreamHttpMethod": [ "Post", "Put" ]
     },
 
 
@@ -24,7 +24,7 @@
         }
       ],
       "UpstreamPathTemplate": "/rescue/{id}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+      "UpstreamHttpMethod": [ "Post", "Put" ]
     },
 
 
@@ -38,7 +38,7 @@
         }
       ],
       "UpstreamPathTemplate": "/hospital/{id}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ]
+      "UpstreamHttpMethod": [ "Post", "Put" ]
     },
 
     {
