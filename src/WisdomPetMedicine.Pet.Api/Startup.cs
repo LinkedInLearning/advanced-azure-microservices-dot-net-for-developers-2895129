@@ -22,6 +22,8 @@ namespace WisdomPetMedicine.Pet.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks()
+                    .AddDbContextCheck<PetDbContext>();
             services.AddPetDb(Configuration);
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<PetApplicationService>();
@@ -47,6 +49,7 @@ namespace WisdomPetMedicine.Pet.Api
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health");
                 endpoints.MapControllers();
             });
         }
