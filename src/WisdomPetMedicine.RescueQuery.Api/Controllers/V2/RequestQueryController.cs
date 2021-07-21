@@ -5,8 +5,9 @@ using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WisdomPetMedicine.RescueQuery.Api.Controllers
+namespace WisdomPetMedicine.RescueQuery.Api.Controllers.V2
 {
+    [ApiVersion("2.0")]
     [ApiController]
     [Route("[controller]")]
     public class RescueQueryController : ControllerBase
@@ -25,6 +26,7 @@ namespace WisdomPetMedicine.RescueQuery.Api.Controllers
                         ram.Id, 
                         ram.Name,
                         ram.Breed,
+                        ram.Color,
                         Sex = 
                         CASE ram.Sex
 	                        WHEN 0 THEN 'Male'
