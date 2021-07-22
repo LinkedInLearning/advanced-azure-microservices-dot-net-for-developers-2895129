@@ -5,8 +5,9 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WisdomPetMedicine.Hospital.Api.Controllers
+namespace WisdomPetMedicine.Hospital.Api.Controllers.V2
 {
+    [ApiVersion("2.0")]
     [ApiController]
     [Route("[controller]")]
     public class PatientQueryController : ControllerBase
@@ -21,7 +22,21 @@ namespace WisdomPetMedicine.Hospital.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            string sql = @"SELECT pm.*, p.BloodType, p.Weight, p.Status, p.UpdatedOn
+            string sql = @"SELECT pm.Id,
+                            pm.Name,
+                            pm.Breed,
+                            Sex = 
+                            CASE pm.Sex
+	                            WHEN 0 THEN 'Male'
+	                            WHEN 1 THEN 'Female'
+                            END,
+                            pm.Color,
+                            pm.DateOfBirth,
+                            pm.Species,
+                            p.BloodType, 
+                            p.Weight, 
+                            p.Status, 
+                            p.UpdatedOn
                             FROM PatientsMetadata pm 
                             JOIN Patients p
                             ON pm.Id = p.Id";

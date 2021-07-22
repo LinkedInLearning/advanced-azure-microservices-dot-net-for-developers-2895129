@@ -28,6 +28,12 @@ namespace WisdomPetMedicine.Hospital.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+            });
             services.AddOpenTelemetryTracing(config =>
             {
                 config.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(ServiceName));
@@ -45,7 +51,8 @@ namespace WisdomPetMedicine.Hospital.Api
                   .AddSqlClientInstrumentation(s => s.SetDbStatementForText = true);
             });
             services.AddHealthChecks()
-                    .AddCosmosDbCheck(Configuration);
+                    .AddCosmosDbCheck(Configuration)
+                    .AddDbContextCheck<HospitalDbContext>();
             services.AddHospitalDb(Configuration);
             services.AddSingleton<IPatientAggregateStore, PatientAggregateStore>();
             services.AddScoped<HospitalApplicationService>();
