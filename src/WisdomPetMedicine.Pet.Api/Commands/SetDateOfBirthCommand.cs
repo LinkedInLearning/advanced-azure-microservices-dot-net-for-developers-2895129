@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Pet.Api.Commands;
 
-namespace WisdomPetMedicine.Pet.Api.Commands
+public class SetDateOfBirthCommand
 {
-    public class SetDateOfBirthCommand
-    {
-        public Guid Id { get; set; }
-        public DateTime DateOfBirth { get; set; }
-    }
+    public Guid Id { get; set; }
+    public DateTime DateOfBirth { get; set; }
 }

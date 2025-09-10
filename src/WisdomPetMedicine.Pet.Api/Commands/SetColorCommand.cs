@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Pet.Api.Commands;
 
-namespace WisdomPetMedicine.Pet.Api.Commands
+public class SetColorCommand
 {
-    public class SetColorCommand
-    {
-        public Guid Id { get; set; }
-        public string Color { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Color { get; set; }
 }

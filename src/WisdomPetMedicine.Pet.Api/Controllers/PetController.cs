@@ -1,129 +1,116 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 using WisdomPetMedicine.Pet.Api.ApplicationServices;
 using WisdomPetMedicine.Pet.Api.Commands;
 
-namespace WisdomPetMedicine.Pet.Api.Controllers
+namespace WisdomPetMedicine.Pet.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class PetController(PetApplicationService petApplicationService,
+                     ILogger<PetController> logger) : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class PetController : ControllerBase
+    [HttpPost]
+    public async Task<IActionResult> Post(CreatePetCommand command)
     {
-        private readonly PetApplicationService petApplicationService;
-        private readonly ILogger<PetController> logger;
-
-        public PetController(PetApplicationService petApplicationService,
-                             ILogger<PetController> logger)
+        try
         {
-            this.petApplicationService = petApplicationService;
-            this.logger = logger;
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(CreatePetCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
+    }
 
-        [HttpPut("name")]
-        public async Task<IActionResult> Put(SetNameCommand command)
+    [HttpPut("name")]
+    public async Task<IActionResult> Put(SetNameCommand command)
+    {
+        try
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
         }
-
-        [HttpPut("breed")]
-        public async Task<IActionResult> Put(SetBreedCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
+    }
 
-        [HttpPut("color")]
-        public async Task<IActionResult> Put(SetColorCommand command)
+    [HttpPut("breed")]
+    public async Task<IActionResult> Put(SetBreedCommand command)
+    {
+        try
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
         }
-
-        [HttpPut("dateofbirth")]
-        public async Task<IActionResult> Put(SetDateOfBirthCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
+    }
 
-        [HttpPost("flagforadoption")]
-        public async Task<IActionResult> Post(FlagForAdoptionCommand command)
+    [HttpPut("color")]
+    public async Task<IActionResult> Put(SetColorCommand command)
+    {
+        try
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
         }
-
-        [HttpPost("transfertohospital")]
-        public async Task<IActionResult> Post(TransferToHospitalCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await petApplicationService.HandleCommandAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("dateofbirth")]
+    public async Task<IActionResult> Put(SetDateOfBirthCommand command)
+    {
+        try
+        {
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("flagforadoption")]
+    public async Task<IActionResult> Post(FlagForAdoptionCommand command)
+    {
+        try
+        {
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("transfertohospital")]
+    public async Task<IActionResult> Post(TransferToHospitalCommand command)
+    {
+        try
+        {
+            await petApplicationService.HandleCommandAsync(command);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using WisdomPetMedicine.Common;
 
-namespace WisdomPetMedicine.Rescue.Domain.Events
+namespace WisdomPetMedicine.Rescue.Domain.Events;
+
+public static class DomainEvents
 {
-    public static class DomainEvents
-    {
-        public static readonly DomainEvent<AdoptionRequestCreated> AdoptionRequestCreated = new();
-    }
+    public static readonly DomainEvent<AdoptionRequestCreated> AdoptionRequestCreated = new();
 }

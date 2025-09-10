@@ -1,45 +1,39 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace WisdomPetMedicine.Pet.Api.Infrastructure
+namespace WisdomPetMedicine.Pet.Api.Infrastructure;
+
+public class PetDbContext(DbContextOptions<PetDbContext> options) : DbContext(options)
 {
-    public class PetDbContext : DbContext
+    public DbSet<Domain.Entities.Pet> Pets { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public DbSet<Domain.Entities.Pet> Pets { get; set; }
+        base.OnModelCreating(modelBuilder);
 
-        public PetDbContext(DbContextOptions<PetDbContext> options) : base(options) { }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Domain.Entities.Pet>().HasKey(x => x.Id);
-            modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Name);
-            modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Breed);
-            modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.SexOfPet);
-            modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Species);
-            modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Color);
-            modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.DateOfBirth);
-        }
+        modelBuilder.Entity<Domain.Entities.Pet>().HasKey(x => x.Id);
+        modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Name);
+        modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Breed);
+        modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.SexOfPet);
+        modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Species);
+        modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.Color);
+        modelBuilder.Entity<Domain.Entities.Pet>().OwnsOne(x => x.DateOfBirth);
     }
+}
 
-    public static class PetDbContextExtensions
+public static class PetDbContextExtensions
+{
+    public static void AddPetDb(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void AddPetDb(this IServiceCollection services, IConfiguration configuration)
+        services.AddDbContext<PetDbContext>(options =>
         {
-            services.AddDbContext<PetDbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("Pet"));
-            });
-        }
-        public static void EnsurePetDbIsCreated(this IApplicationBuilder app)
-        {
-            using var scope = app.ApplicationServices.CreateScope();
-            var context = scope.ServiceProvider.GetService<PetDbContext>();
-            context.Database.EnsureCreated();
-            context.Database.CloseConnection();
-        }
+            options.UseSqlServer(configuration.GetConnectionString("Pet"));
+        });
+    }
+    public static void EnsurePetDbIsCreated(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var context = scope.ServiceProvider.GetService<PetDbContext>();
+        context.Database.EnsureCreated();
+        context.Database.CloseConnection();
     }
 }

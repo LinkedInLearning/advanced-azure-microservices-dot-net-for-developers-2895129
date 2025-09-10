@@ -1,11 +1,7 @@
 ﻿using System;
 
-namespace WisdomPetMedicine.Hospital.Domain.Exceptions
+namespace WisdomPetMedicine.Hospital.Domain.Exceptions;
+
+public class InvalidPatientStateException(string message) : Exception(message)
 {
-    public class InvalidPatientStateException : Exception
-    {
-        public InvalidPatientStateException(string message) : base(message)
-        {
-        }
-    }
 }

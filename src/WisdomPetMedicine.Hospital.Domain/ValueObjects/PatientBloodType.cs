@@ -1,22 +1,21 @@
-﻿namespace WisdomPetMedicine.Hospital.Domain.ValueObjects
+﻿namespace WisdomPetMedicine.Hospital.Domain.ValueObjects;
+
+public record PatientBloodType
 {
-    public record PatientBloodType
+    public string Value { get; init; }
+
+    internal PatientBloodType(string value)
     {
-        public string Value { get; init; }
+        Value = value;
+    }
 
-        internal PatientBloodType(string value)
-        {
-            Value = value;
-        }
+    public static implicit operator string (PatientBloodType bloodType)
+    {
+        return bloodType.Value;
+    }
 
-        public static implicit operator string (PatientBloodType bloodType)
-        {
-            return bloodType.Value;
-        }
-
-        public static PatientBloodType Create(string value)
-        {
-            return new PatientBloodType(value);
-        }
+    public static PatientBloodType Create(string value)
+    {
+        return new PatientBloodType(value);
     }
 }

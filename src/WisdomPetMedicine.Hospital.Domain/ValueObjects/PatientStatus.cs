@@ -1,9 +1,8 @@
-﻿namespace WisdomPetMedicine.Hospital.Domain.ValueObjects
+﻿namespace WisdomPetMedicine.Hospital.Domain.ValueObjects;
+
+public enum PatientStatus
 {
-    public enum PatientStatus
-    {
-        Pending,
-        Admitted,
-        Discharged
-    }
+    Pending,
+    Admitted,
+    Discharged
 }

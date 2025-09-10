@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Pet.Api.Commands;
 
-namespace WisdomPetMedicine.Pet.Api.Commands
+public class FlagForAdoptionCommand
 {
-    public class FlagForAdoptionCommand
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

@@ -1,26 +1,20 @@
-﻿using Dapper;
+﻿using Asp.Versioning;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace WisdomPetMedicine.Hospital.Api.Controllers.V1
+namespace WisdomPetMedicine.Hospital.Api.Controllers.V1;
+
+[ApiVersion("1.0")]
+[ApiController]
+[Route("[controller]")]
+public class PatientQueryController(IConfiguration configuration,
+                                    ILogger<PatientQueryController> logger) : ControllerBase
 {
-    [ApiVersion("1.0")]
-    [ApiController]
-    [Route("[controller]")]
-    public class PatientQueryController : ControllerBase
+    [HttpGet]
+    public async Task<IActionResult> Get()
     {
-        private readonly IConfiguration configuration;
-
-        public PatientQueryController(IConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        try
         {
             string sql = @"SELECT pm.*, p.BloodType, p.Weight, p.Status, p.UpdatedOn
                             FROM PatientsMetadata pm 
@@ -29,6 +23,11 @@ namespace WisdomPetMedicine.Hospital.Api.Controllers.V1
             using var connection = new SqlConnection(configuration.GetConnectionString("Hospital"));
             var orderDetail = (await connection.QueryAsync(sql)).ToList();
             return Ok(orderDetail);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message, ex);
+            return StatusCode(500, "Try again later.");
         }
     }
 }

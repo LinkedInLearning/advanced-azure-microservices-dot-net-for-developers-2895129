@@ -1,6 +1,5 @@
-﻿namespace WisdomPetMedicine.Common
+﻿namespace WisdomPetMedicine.Common;
+
+public interface IIntegrationEvent
 {
-    public interface IIntegrationEvent
-    {
-    }
 }

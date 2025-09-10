@@ -1,10 +1,9 @@
-﻿namespace WisdomPetMedicine.Rescue.Domain.ValueObjects
+﻿namespace WisdomPetMedicine.Rescue.Domain.ValueObjects;
+
+public enum RescuedAnimalAdoptionStatus
 {
-    public enum RescuedAnimalAdoptionStatus
-    {
-        None,
-        PendingReview,
-        Accepted,
-        Rejected
-    }
+    None,
+    PendingReview,
+    Accepted,
+    Rejected
 }

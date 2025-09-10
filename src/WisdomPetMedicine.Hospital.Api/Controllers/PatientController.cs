@@ -1,99 +1,86 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 using WisdomPetMedicine.Hospital.Api.ApplicationServices;
 using WisdomPetMedicine.Hospital.Api.Commands;
 
-namespace WisdomPetMedicine.Hospital.Api.Controllers
+namespace WisdomPetMedicine.Hospital.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class PatientController(HospitalApplicationService applicationService,
+                         ILogger<PatientController> logger) : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class PatientController : ControllerBase
+    [HttpPut("weight")]
+    public async Task<IActionResult> Put(SetWeightCommand command)
     {
-        private readonly HospitalApplicationService applicationService;
-        private readonly ILogger<PatientController> logger;
-
-        public PatientController(HospitalApplicationService applicationService,
-                                 ILogger<PatientController> logger)
+        try
         {
-            this.applicationService = applicationService;
-            this.logger = logger;
+            await applicationService.HandleAsync(command);
+            return Ok();
         }
-
-        [HttpPut("weight")]
-        public async Task<IActionResult> Put(SetWeightCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await applicationService.HandleAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger?.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
+    }
 
-        [HttpPut("bloodType")]
-        public async Task<IActionResult> Put(SetBloodTypeCommand command)
+    [HttpPut("bloodType")]
+    public async Task<IActionResult> Put(SetBloodTypeCommand command)
+    {
+        try
         {
-            try
-            {
-                await applicationService.HandleAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            await applicationService.HandleAsync(command);
+            return Ok();
         }
-
-        [HttpPost("admit")]
-        public async Task<IActionResult> Post(AdmitPatientCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await applicationService.HandleAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger?.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
+    }
 
-        [HttpPost("discharge")]
-        public async Task<IActionResult> Post(DischargePatientCommand command)
+    [HttpPost("admit")]
+    public async Task<IActionResult> Post(AdmitPatientCommand command)
+    {
+        try
         {
-            try
-            {
-                await applicationService.HandleAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            await applicationService.HandleAsync(command);
+            return Ok();
         }
-
-        [HttpPost("procedure")]
-        public async Task<IActionResult> Post(AddProcedureCommand command)
+        catch (Exception ex)
         {
-            try
-            {
-                await applicationService.HandleAsync(command);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger?.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            logger?.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("discharge")]
+    public async Task<IActionResult> Post(DischargePatientCommand command)
+    {
+        try
+        {
+            await applicationService.HandleAsync(command);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger?.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("procedure")]
+    public async Task<IActionResult> Post(AddProcedureCommand command)
+    {
+        try
+        {
+            await applicationService.HandleAsync(command);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger?.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 }

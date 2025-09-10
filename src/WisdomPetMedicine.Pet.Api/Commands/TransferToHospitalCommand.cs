@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Pet.Api.Commands;
 
-namespace WisdomPetMedicine.Pet.Api.Commands
+public class TransferToHospitalCommand
 {
-    public class TransferToHospitalCommand
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

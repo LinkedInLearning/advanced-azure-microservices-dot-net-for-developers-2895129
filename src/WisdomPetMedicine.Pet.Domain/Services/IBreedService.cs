@@ -1,9 +1,8 @@
 ﻿using WisdomPetMedicine.Pet.Domain.ValueObjects;
 
-namespace WisdomPetMedicine.Pet.Domain.Services
+namespace WisdomPetMedicine.Pet.Domain.Services;
+
+public interface IBreedService
 {
-    public interface IBreedService
-    {
-        PetBreed Find(string name);
-    }
+    PetBreed Find(string name);
 }

@@ -1,67 +1,58 @@
-﻿using System.Threading.Tasks;
-using WisdomPetMedicine.Rescue.Domain.Entities;
+﻿using WisdomPetMedicine.Rescue.Domain.Entities;
 using WisdomPetMedicine.Rescue.Domain.Repositories;
 using WisdomPetMedicine.Rescue.Domain.ValueObjects;
 
-namespace WisdomPetMedicine.Rescue.Api.Infrastructure
+namespace WisdomPetMedicine.Rescue.Api.Infrastructure;
+
+public class RescueRepository(RescueDbContext dbContext) : IRescueRepository
 {
-    public class RescueRepository : IRescueRepository
+    public async Task AddAdopterAsync(Adopter adopter)
     {
-        private readonly RescueDbContext dbContext;
+        dbContext.Adopters.Add(adopter);
+        await dbContext.SaveChangesAsync();
+    }
 
-        public RescueRepository(RescueDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
+    public async Task AddRescuedAnimalAsync(RescuedAnimal rescuedAnimal)
+    {
+        dbContext.RescuedAnimals.Add(rescuedAnimal);
+        await dbContext.SaveChangesAsync();
+    }
 
-        public async Task AddAdopterAsync(Adopter adopter)
+    public async Task<Adopter> GetAdopterAsync(AdopterId id)
+    {
+        return await dbContext.Adopters.FindAsync(id.Value);
+    }
+
+    public async Task<RescuedAnimal> GetRescuedAnimalAsync(RescuedAnimalId id)
+    {
+        return await dbContext.RescuedAnimals.FindAsync(id.Value);
+    }
+
+    public async Task UpdateAdopterAsync(Adopter adopter)
+    {
+        var adopterToUpdate = await dbContext.Adopters.FindAsync(adopter.Id);
+        if (adopterToUpdate == null)
         {
             dbContext.Adopters.Add(adopter);
-            await dbContext.SaveChangesAsync();
         }
+        else
+        {
+            dbContext.Adopters.Update(adopter);
+        }
+        await dbContext.SaveChangesAsync();
+    }
 
-        public async Task AddRescuedAnimalAsync(RescuedAnimal rescuedAnimal)
+    public async Task UpdateRescuedAnimalAsync(RescuedAnimal rescuedAnimal)
+    {
+        var rescuedAnimalToUpdate = await dbContext.RescuedAnimals.FindAsync(rescuedAnimal.Id);
+        if (rescuedAnimalToUpdate == null)
         {
             dbContext.RescuedAnimals.Add(rescuedAnimal);
-            await dbContext.SaveChangesAsync();
         }
-
-        public async Task<Adopter> GetAdopterAsync(AdopterId id)
+        else
         {
-            return await dbContext.Adopters.FindAsync(id.Value);
+            dbContext.RescuedAnimals.Update(rescuedAnimal);
         }
-
-        public async Task<RescuedAnimal> GetRescuedAnimalAsync(RescuedAnimalId id)
-        {
-            return await dbContext.RescuedAnimals.FindAsync(id.Value);
-        }
-
-        public async Task UpdateAdopterAsync(Adopter adopter)
-        {
-            var adopterToUpdate = await dbContext.Adopters.FindAsync(adopter.Id);
-            if (adopterToUpdate == null)
-            {
-                dbContext.Adopters.Add(adopter);
-            }
-            else
-            {
-                dbContext.Adopters.Update(adopter);
-            }
-            await dbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateRescuedAnimalAsync(RescuedAnimal rescuedAnimal)
-        {
-            var rescuedAnimalToUpdate = await dbContext.RescuedAnimals.FindAsync(rescuedAnimal.Id);
-            if (rescuedAnimalToUpdate == null)
-            {
-                dbContext.RescuedAnimals.Add(rescuedAnimal);
-            }
-            else
-            {
-                dbContext.RescuedAnimals.Update(rescuedAnimal);
-            }
-            await dbContext.SaveChangesAsync();
-        }
+        await dbContext.SaveChangesAsync();
     }
 }

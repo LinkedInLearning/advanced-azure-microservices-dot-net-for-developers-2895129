@@ -1,29 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace WisdomPetMedicine.Common
+namespace WisdomPetMedicine.Common;
+
+public class DomainEvent<T>
 {
-    public class DomainEvent<T>
+    private List<Action<T>> Actions { get; } = new List<Action<T>>();
+
+    public void Register(Action<T> callback)
     {
-        private List<Action<T>> Actions { get; } = new List<Action<T>>();
-
-        public void Register(Action<T> callback)
+        if (Actions.Exists(a => a.Method == callback.Method))
         {
-            if (Actions.Exists(a => a.Method == callback.Method))
-            {
-                return;
-            }
-
-            Actions.Add(callback);
+            return;
         }
 
-        public void Publish(T args)
+        Actions.Add(callback);
+    }
+
+    public void Publish(T args)
+    {
+        foreach (Action<T> item in Actions)
         {
-            foreach (Action<T> item in Actions)
-            {
-                item.Invoke(args);
-            }
+            item.Invoke(args);
         }
     }
 }

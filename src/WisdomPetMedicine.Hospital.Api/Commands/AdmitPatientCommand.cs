@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Hospital.Api.Commands;
 
-namespace WisdomPetMedicine.Hospital.Api.Commands
+public class AdmitPatientCommand
 {
-    public class AdmitPatientCommand
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

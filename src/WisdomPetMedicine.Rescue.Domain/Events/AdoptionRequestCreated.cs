@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace WisdomPetMedicine.Rescue.Domain.Events
+namespace WisdomPetMedicine.Rescue.Domain.Events;
+
+public class AdoptionRequestCreated
 {
-    public class AdoptionRequestCreated
-    {
-        public Guid RescuedAnimalId { get; set; }
-        public Guid AdopterId { get; set; }
-    }
+    public Guid RescuedAnimalId { get; set; }
+    public Guid AdopterId { get; set; }
 }

@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Hospital.Api.Commands;
 
-namespace WisdomPetMedicine.Hospital.Api.Commands
+public class SetBloodTypeCommand
 {
-    public class SetBloodTypeCommand
-    {
-        public Guid Id { get; set; }
-        public string BloodType { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string BloodType { get; set; }
 }

@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace WisdomPetMedicine.Rescue.Api.Commands;
 
-namespace WisdomPetMedicine.Rescue.Api.Commands
+public class SetAdopterPhoneNumberCommand
 {
-    public class SetAdopterPhoneNumberCommand
-    {
-        public Guid Id { get; set; }
-        public string PhoneNumber { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string PhoneNumber { get; set; }
 }
