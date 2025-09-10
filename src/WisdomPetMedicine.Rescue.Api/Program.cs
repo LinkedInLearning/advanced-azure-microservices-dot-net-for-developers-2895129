@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.EnsureRescueDbIsCreated();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

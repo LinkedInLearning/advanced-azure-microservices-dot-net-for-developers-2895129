@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "wisdompetmedicine.pet.api": "StartDebugging",
+        "wisdompetmedicine.rescue.api": "StartDebugging",
+        "wisdompetmedicine.rescuequery.api": "StartDebugging",
+        "wisdompetmedicine.hospital.api": "StartDebugging",
+        "wisdompetmedicine.hospital.projector": "StartDebugging",
+        "wisdompetmedicine.api": "StartDebugging"
+      }
+    }
+  }
+}

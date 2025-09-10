@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/pet/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44342
+          "Host": "wisdompetmedicine.pet.api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/pet/{id}",
@@ -16,11 +16,11 @@
 
     {
       "DownstreamPathTemplate": "/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44302
+          "Host": "wisdompetmedicine.rescue.api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/rescue/{id}",
@@ -30,11 +30,11 @@
 
     {
       "DownstreamPathTemplate": "/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44350
+          "Host": "wisdompetmedicine.hospital.api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/hospital/{id}",
@@ -43,11 +43,11 @@
 
     {
       "DownstreamPathTemplate": "/petquery",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44342
+          "Host": "wisdompetmedicine.pet.api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/queries/pets/all",
@@ -57,11 +57,11 @@
 
     {
       "DownstreamPathTemplate": "/rescuequery",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44392
+          "Host": "wisdompetmedicine.rescuequery.api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/queries/adoptions/all",
@@ -71,11 +71,11 @@
 
     {
       "DownstreamPathTemplate": "/patientquery",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44350
+          "Host": "wisdompetmedicine.hospital.api",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/queries/patients/all",
@@ -83,6 +83,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44324"
+    "BaseUrl": "https://localhost:5501"
   }
 }

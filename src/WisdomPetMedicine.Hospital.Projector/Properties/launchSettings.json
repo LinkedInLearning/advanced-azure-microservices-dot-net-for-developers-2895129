@@ -8,7 +8,7 @@
       "commandName": "Docker",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "containerRunArguments": "--init",
-      "httpPort": 30120,
+      "httpPort": 30121,
       "useSSL": false
     }
   }

@@ -59,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.EnsurePetDbIsCreated();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
