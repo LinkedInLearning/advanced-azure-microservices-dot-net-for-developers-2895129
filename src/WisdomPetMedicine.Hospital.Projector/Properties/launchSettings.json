@@ -2,8 +2,14 @@
   "profiles": {
     "WisdomPetMedicine.Hospital.Projector": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7123",
-      "launchBrowser": false
+      "commandLineArgs": "--port 7123"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "containerRunArguments": "--init",
+      "httpPort": 30120,
+      "useSSL": false
     }
   }
 }
