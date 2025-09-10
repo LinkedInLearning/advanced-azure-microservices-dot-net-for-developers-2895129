@@ -1,22 +1,21 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+﻿using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
-namespace WisdomPetMedicine.Api
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("ocelot.json", optional: false);
+builder.Services.AddOcelot();
+
+var app = builder.Build();
+
+app.MapWhen(context => context.Request.Path == "/", appBuilder =>
 {
-    public class Program
+    appBuilder.Run(async context =>
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+        await context.Response.WriteAsync("Wisdom Pet Medicine - API Gateway");
+    });
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration(c => c.AddJsonFile("ocelot.json"));
-                });
-    }
-}
+await app.UseOcelot();
+
+app.Run();

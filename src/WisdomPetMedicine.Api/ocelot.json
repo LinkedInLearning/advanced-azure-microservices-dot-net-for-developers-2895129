@@ -34,7 +34,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44340
+          "Port": 44350
         }
       ],
       "UpstreamPathTemplate": "/hospital/{id}",
@@ -75,7 +75,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44340
+          "Port": 44350
         }
       ],
       "UpstreamPathTemplate": "/queries/patients/all",

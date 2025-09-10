@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36401.2 d17.14
+VisualStudioVersion = 17.14.36401.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WisdomPetMedicine.Pet.Domain", "src\WisdomPetMedicine.Pet.Domain\WisdomPetMedicine.Pet.Domain.csproj", "{31E1AC38-31E9-4451-838B-D4050D1DCAD4}"
 EndProject
@@ -32,6 +32,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WisdomPetMedicine.RescueQuery.Api", "src\WisdomPetMedicine.RescueQuery.Api\WisdomPetMedicine.RescueQuery.Api.csproj", "{3C91F250-D3D3-44BF-A767-F2339791CCE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WisdomPetMedicine.Hospital.Infrastructure", "src\WisdomPetMedicine.Hospital.Infrastructure\WisdomPetMedicine.Hospital.Infrastructure.csproj", "{E99E63FB-EF2F-47E9-B58F-77B72021C230}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WisdomPetMedicine.Api", "src\WisdomPetMedicine.Api\WisdomPetMedicine.Api.csproj", "{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -187,6 +191,18 @@ Global
 		{E99E63FB-EF2F-47E9-B58F-77B72021C230}.Release|x64.Build.0 = Release|Any CPU
 		{E99E63FB-EF2F-47E9-B58F-77B72021C230}.Release|x86.ActiveCfg = Release|Any CPU
 		{E99E63FB-EF2F-47E9-B58F-77B72021C230}.Release|x86.Build.0 = Release|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Debug|x64.Build.0 = Debug|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Debug|x86.Build.0 = Debug|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Release|x64.ActiveCfg = Release|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Release|x64.Build.0 = Release|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Release|x86.ActiveCfg = Release|Any CPU
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,6 +219,7 @@ Global
 		{D189A9C3-FF89-4DB5-91EB-F60A55FB6144} = {5C34E5FA-F38D-48ED-8C0A-18CB38348A65}
 		{3C91F250-D3D3-44BF-A767-F2339791CCE7} = {29F05733-5BEC-41F1-B6DB-63A81C8C1608}
 		{E99E63FB-EF2F-47E9-B58F-77B72021C230} = {ED32E001-37EB-482C-98B7-716EF5B463E7}
+		{CF53899D-F2EE-D3DF-F9B0-07A0CECF0152} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7097D41A-55D6-4B84-9F16-4568C9D6C544}
