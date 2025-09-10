@@ -1,23 +1,18 @@
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WisdomPetMedicine.Hospital.Domain.Repositories;
 using WisdomPetMedicine.Hospital.Infrastructure;
 
-namespace WisdomPetMedicine.Hospital.Projector
-{
-    public class Program
-    {
-        public static void Main()
-        {
-            var host = new HostBuilder()
-                .ConfigureFunctionsWorkerDefaults()
-                .ConfigureServices(services =>
-                {
-                    services.AddSingleton<IPatientAggregateStore, PatientAggregateStore>();
-                })
-                .Build();
+var builder = FunctionsApplication.CreateBuilder(args);
 
-            host.Run();
-        }
-    }
-}
+builder.ConfigureFunctionsWebApplication();
+
+builder.Services
+    .AddApplicationInsightsTelemetryWorkerService()
+    .ConfigureFunctionsApplicationInsights();
+
+builder.Services.AddSingleton<IPatientAggregateStore, PatientAggregateStore>();
+
+builder.Build().Run();

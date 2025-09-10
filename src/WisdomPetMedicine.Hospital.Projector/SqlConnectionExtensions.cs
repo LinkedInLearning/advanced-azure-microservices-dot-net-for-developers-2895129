@@ -1,15 +1,14 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using System;
 using WisdomPetMedicine.Hospital.Domain.Entities;
 
-namespace WisdomPetMedicine.Hospital.Projector
+namespace WisdomPetMedicine.Hospital.Projector;
+
+static class SqlConnectionExtensions
 {
-    static class SqlConnectionExtensions
+    public static void EnsurePatientsTable(this SqlConnection conn)
     {
-        public static void EnsurePatientsTable(this SqlConnection conn)
-        {
-            var query = @"
+        var query = @"
                 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_SCHEMA = 'dbo' 
@@ -22,14 +21,13 @@ namespace WisdomPetMedicine.Hospital.Projector
                     [UpdatedOn] [datetime] NOT NULL
                  CONSTRAINT [PK_Patients] PRIMARY KEY CLUSTERED ([Id] ASC))";
 
-            conn.Execute(query);
-        }
+        conn.Execute(query);
+    }
 
-        public static void InsertPatient(this SqlConnection conn, Patient patient)
-        {
-            conn.Execute(@"DELETE FROM Patients WHERE Id = @Id 
+    public static void InsertPatient(this SqlConnection conn, Patient patient)
+    {
+        conn.Execute(@"DELETE FROM Patients WHERE Id = @Id 
                            INSERT INTO Patients (Id, BloodType, Weight, Status, UpdatedOn) VALUES (@Id, @BloodType, @Weight, @Status, GETUTCDATE())",
-                           new { Id = patient.Id, BloodType = patient.BloodType?.Value, Weight = patient.Weight?.Value, Status = Enum.GetName(patient.Status) });
-        }
+                       new { Id = patient.Id, BloodType = patient.BloodType?.Value, Weight = patient.Weight?.Value, Status = Enum.GetName(patient.Status) });
     }
 }
